@@ -5,6 +5,7 @@ package mmark
 import (
 	"bytes"
 	"fmt"
+	"math/rand"
 	"strconv"
 	"strings"
 )
@@ -287,14 +288,11 @@ func (options *Plain) Example(out *bytes.Buffer, index int) {
 
 func (options *Plain) Paragraph(out *bytes.Buffer, text func() bool, flags int) {
 	marker := out.Len()
-	doubleSpace(out)
 
-	out.WriteString("<p>")
 	if !text() {
 		out.Truncate(marker)
 		return
 	}
-	out.WriteString("</p>\n")
 }
 
 func (options *Plain) Math(out *bytes.Buffer, text []byte, display bool) {
@@ -523,7 +521,7 @@ func (options *Plain) References(out *bytes.Buffer, citations map[string]*citati
 func (options *Plain) Entity(out *bytes.Buffer, entity []byte)                       { out.Write(entity) }
 
 func (options *Plain) NormalText(out *bytes.Buffer, text []byte) {
-	attrEscape(out, text)
+	options.lineText(out, text, 80, 0)
 }
 
 func (options *Plain) DocumentHeader(out *bytes.Buffer, first bool) {
@@ -684,14 +682,13 @@ func (options *Plain) InlineAttr() *InlineAttr {
 	return options.ial
 }
 
-
 // Center the text on the page
 func (options *Plain) centerText(out *bytes.Buffer, text []byte, width int) {}
 
 // Line out the text on the page
 func (options *Plain) lineText(out *bytes.Buffer, text []byte, width, indent int) {
 	str := bytes.Replace(text, []byte("\n"), []byte(" "), -1)
-	words := bytes.Split(str, []byte(" "))
+	words := strings.Split(string(str), " ")
 
 	wo := make([]string, 0, 10) // save word before outputting a line
 
@@ -715,7 +712,7 @@ func (options *Plain) lineText(out *bytes.Buffer, text []byte, width, indent int
 			wo = wo[:0]
 			linelen = 0
 		}
-		wo = append(wo, string(w)+" ")
+		wo = append(wo, w+" ")
 		linelen += len(w) + 1
 	}
 	// remainder
@@ -723,6 +720,4 @@ func (options *Plain) lineText(out *bytes.Buffer, text []byte, width, indent int
 		out.WriteString(wo[i])
 	}
 	out.WriteByte('\n')
-	fmt.Printf(out.String())
 }
-*/
