@@ -684,33 +684,24 @@ func (options *Plain) InlineAttr() *InlineAttr {
 	return options.ial
 }
 
-/*
-var in string = `Mmark [@mmark] is a markdown processor. It supports the markdown syntax
-and has been extended with (syntax) features found in other markdown implementations like
-kramdown, PHP markdown extra, [@pandoc], leanpub and even asciidoc.
-This allows mmark to be used to write larger, structured documents such
-as RFC and I-Ds or even books, while not
-deviating too far from markdown`
 
-// we typeset a line, try to put as many words in our 80 column boundery
-// and then revisit if we can stretch some spaces so we line out as perfectly
-// as possible.
+// Center the text on the page
+func (options *Plain) centerText(out *bytes.Buffer, text []byte, width int) {}
 
-const WIDTH = 30
+// Line out the text on the page
+func (options *Plain) lineText(out *bytes.Buffer, text []byte, width, indent int) {
+	str := bytes.Replace(text, []byte("\n"), []byte(" "), -1)
+	words := bytes.Split(str, []byte(" "))
 
-func main() {
 	wo := make([]string, 0, 10) // save word before outputting a line
-	var out bytes.Buffer
 
-	all := strings.Replace(in, "\n", " ", -1) // excecpt the first.. ?
-	words := strings.Split(all, " ")
 	linelen := 0
-	for _, word := range words {
-		if linelen+len(word) > WIDTH { // line out the current line
-			spaces := WIDTH - linelen
-			// naive left to right, add spaces
+	for _, w := range words {
+		if linelen+len(wo) > width { // line out the current line
+			spaces := width - linelen
+
 			for i := 0; i < spaces; i++ {
-				if i == len(wo)-1 {
+				if i == len(w)-1 {
 					break
 				}
 				// randomly select word to add space
@@ -724,8 +715,8 @@ func main() {
 			wo = wo[:0]
 			linelen = 0
 		}
-		wo = append(wo, word+" ")
-		linelen += len(word) + 1
+		wo = append(wo, string(w)+" ")
+		linelen += len(w) + 1
 	}
 	// remainder
 	for i := 0; i < len(wo); i++ {
