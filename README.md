@@ -22,6 +22,7 @@ It adds the following syntax elements to [black friday](https://github.com/russr
 * Table footer;
 * Quote attribution;
 * Including other files;
+    * Special syntax for including sourcecode
 * [TOML][3] titleblock;
 * Inline Attribute Lists;
 * Indices;
@@ -37,7 +38,7 @@ It adds the following syntax elements to [black friday](https://github.com/russr
 * Abbreviations;
 * Super- and subscript;
 * HTML renderer uses HTML5 (TODO);
-* Exercises and answers;
+* Math blocks;
 * Allow document to have parts.
 
 Mmark is forked from blackfriday which started out as a translation from C of [upskirt][4].
