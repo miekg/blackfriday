@@ -3,10 +3,24 @@ language: go
 go:
     - 1.4
     - 1.5
-
 os:
     - linux
     - osx
+
+# let the osx builds fail for a while
+matrix:
+  allow_failures:
+    os:
+      - osx
+
+# get our python environment up and running
+addons:
+  apt:
+    packages:
+    - python
+    - python-dev
+before_install:
+    - pip install xml2rpc
 
 install:
     - go get -d -t -v ./...
