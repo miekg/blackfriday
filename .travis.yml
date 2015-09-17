@@ -6,13 +6,15 @@ go:
 os:
     - linux
     - osx
-
+env:
+ - XML2RFC_VERSION=2.5.0
+ - XML2RFC_VERSION=2.5.1.dev0
+ - XML2RFC_VERSION=2.4.12
 # let the osx builds fail for a while
 matrix:
   allow_failures:
     os:
       - osx
-
 # get our python environment up and running
 addons:
   apt:
@@ -20,12 +22,10 @@ addons:
     - python
     - python-dev
 before_install:
-    - sudo pip install xml2rfc
-
+    - sudo pip install xml2rfc==$XML2RFC_VERSION
 install:
     - go get -d -t -v ./...
     - go build -v ./...
-
 script:
     - go test -v ./...
-    - xml2rfc -v
+    - xml2rfc -V
