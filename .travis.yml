@@ -36,3 +36,4 @@ script:
     - go test -v ./...
     - xml2rfc -V
     - bats -v
+    - cd rfc && make all
