@@ -1,5 +1,5 @@
 language: go
-
+sudo: required
 go:
     - 1.4
     - 1.5
@@ -20,7 +20,7 @@ addons:
     - python
     - python-dev
 before_install:
-    - pip install xml2rfc
+    - sudo pip install xml2rfc
 
 install:
     - go get -d -t -v ./...
