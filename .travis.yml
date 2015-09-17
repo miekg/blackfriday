@@ -36,4 +36,5 @@ script:
     - go test -v ./...
     - xml2rfc -V
     - bats -v
+    - cd "$TRAVIS_BUILD_DIR"     && make
     - cd "$TRAVIS_BUILD_DIR"/rfc && make all
