@@ -20,7 +20,7 @@ addons:
     - python
     - python-dev
 before_install:
-    - pip install xml2rpc
+    - pip install xml2rfc
 
 install:
     - go get -d -t -v ./...
@@ -28,4 +28,4 @@ install:
 
 script:
     - go test -v ./...
-    - xml2rpc
+    - xml2rfc -v
