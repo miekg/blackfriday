@@ -1879,6 +1879,7 @@ func (p *parser) oliPrefix(data []byte) int {
 	if start == i || (data[i] != '.' && data[i] != ')') || data[i+1] != ' ' {
 		return 0
 	}
+	println("oliPrefix", string(data[:6]))
 	return i + 2
 }
 
@@ -2180,6 +2181,15 @@ gatherlines:
 			p.dliPrefix(chunk) > 0:
 
 			if containsBlankLine {
+				// end the list if the type changed after a blank line
+				if (*flags&_LIST_TYPE_ORDERED != 0 && p.uliPrefix(chunk) > 0) ||
+					(*flags&_LIST_TYPE_ORDERED == 0 && p.oliPrefix(chunk) > 0) {
+					println("QUITTING")
+
+					*flags |= _LIST_ITEM_END_OF_LIST
+					break gatherlines
+				}
+
 				*flags |= _LIST_ITEM_CONTAINS_BLOCK
 			}
 
@@ -2224,7 +2234,6 @@ gatherlines:
 				*flags |= _LIST_ITEM_END_OF_LIST
 			}
 			break gatherlines
-
 
 		// a blank line means this should be parsed as a block
 		case containsBlankLine:

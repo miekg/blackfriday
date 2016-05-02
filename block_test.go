@@ -582,6 +582,12 @@ func TestUnorderedList(t *testing.T) {
 		"* List\n\n          code block with spaces\n",
 		"<ul>\n<li><p>List</p>\n\n<pre><code>  code block with spaces\n</code></pre></li>\n</ul>\n",
 
+		"1. List\n\n* Spacer Mixed listing\n",
+		"<ol>\n<li>List</li>\n</ol>\n\n<ul>\n<li>Spacer Mixed listing</li>\n</ul>\n",
+
+		"1. List\n* Mixed listing\n",
+		"<ol>\n<li>List</li>\n<li>Mixed listing</li>\n</ol>\n",
+
 		"* List\n\n    * sublist\n\n    normal text\n\n    * another sublist\n",
 		"<ul>\n<li><p>List</p>\n\n<ul>\n<li>sublist</li>\n</ul>\n\n<p>normal text</p>\n\n<ul>\n<li>another sublist</li>\n</ul></li>\n</ul>\n",
 
