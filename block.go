@@ -1850,10 +1850,12 @@ func (p *parser) uliPrefix(data []byte) int {
 		i++
 	}
 
-	// need a *, +, #, or - followed by a space
-	if (data[i] != '*' && data[i] != '+' && data[i] != '-' && data[i] != ' ') || data[i+1] != ' ' {
+	// need a *, +, or - followed by a space
+	if (data[i] != '*' && data[i] != '+' && data[i] != '-') ||
+		data[i+1] != ' ' {
 		return 0
 	}
+
 	return i + 2
 }
 
@@ -1879,7 +1881,7 @@ func (p *parser) oliPrefix(data []byte) int {
 	if start == i || (data[i] != '.' && data[i] != ')') || data[i+1] != ' ' {
 		return 0
 	}
-	println("oliPrefix", string(data[:6]))
+
 	return i + 2
 }
 
@@ -2181,10 +2183,12 @@ gatherlines:
 			p.dliPrefix(chunk) > 0:
 
 			if containsBlankLine {
+				// TODO(miek): this prolly needs other prefixes as well: ali rli as they are like oli
 				// end the list if the type changed after a blank line
 				if (*flags&_LIST_TYPE_ORDERED != 0 && p.uliPrefix(chunk) > 0) ||
 					(*flags&_LIST_TYPE_ORDERED == 0 && p.oliPrefix(chunk) > 0) {
-					println("QUITTING")
+					println("QUITING", string(chunk), "AA")
+					println(p.uliPrefix(chunk), p.oliPrefix(chunk))
 
 					*flags |= _LIST_ITEM_END_OF_LIST
 					break gatherlines
