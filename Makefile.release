@@ -30,7 +30,7 @@ push:
 .PHONY: commit
 commit:
 	@echo Committing
-	git commit -am"Release $(VERSION)"
+	@git commit -am"Release $(VERSION)"
 
 .PHONY: build
 build: build-arm build-darwin build-linux
