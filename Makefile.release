@@ -31,6 +31,7 @@ push:
 commit:
 	@echo Committing
 	@git commit -am"Release $(VERSION)"
+	exit 0
 
 .PHONY: build
 build: build-arm build-darwin build-linux
