@@ -1,3 +1,9 @@
+# !THIS REPOSITORY IS DEPRECATED!
+
+A new version of mmark can be found at <https://github.com/mmarkdown/mmark>. Its new main site
+is <https://mmark.nl>.
+
+
 # Mmark
 
 Mmark is a powerful markdown processor written in Go geared towards writing IETF documents. It is, however,
@@ -88,7 +94,7 @@ To output a v2 XML file as demonstrated in the previous section, use this comman
 
     % docker run --rm -v $(pwd):/rfc paulej/rfctools mmark -xml2 -page mmark2rfc.md
 
-Making a draft in text form: 
+Making a draft in text form:
 
     % docker run --rm -v $(pwd):/rfc paulej/rfctools mmark -xml2 -page mmark2rfc.md >x.xml \
     && docker run --rm -v $(pwd):/rfc -v $HOME/.cache/xml2rfc:/var/cache/xml2rfc \
@@ -102,7 +108,7 @@ the current directory to /rfc.  Likewise, xml2rfc will attempt to write cache fi
 Note also that the xml2rfc program will write an output file that will be owned by "root".
 To prevent that (and the cache files) from being owned by root, we instruct docker to run
 using the user's default user ID and group ID via the --user switch.
-    
+
 There is a script available called "md2rfc" simplifies the above to this:
 
     % docker run --rm -v $(pwd):/rfc -v $HOME/.cache/xml2rfc:/var/cache/xml2rfc \
